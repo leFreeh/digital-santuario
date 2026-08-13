@@ -1,0 +1,23 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import ObjectCard from '../components/ObjectCard.astro';
+
+const objects = await getCollection('objects');
+
+const sortedObjects = objects.sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
+---
+
+<Layout>
+  <main>
+    <h1>Santuario</h1>
+
+    <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {sortedObjects.map((object) => (
+        <ObjectCard object={object} />
+      ))}
+    </ul>
+  </main>
+</Layout>

@@ -1,0 +1,26 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+type Props = {
+    previousObject?: CollectionEntry<"objects">;
+    nextObject?: CollectionEntry<"objects">;
+};
+
+const { previousObject, nextObject } = Astro.props;
+---
+
+<nav>
+    {
+        previousObject && (
+            <a href={`/objects/${previousObject.id}`}>
+                ← {previousObject.data.name}
+            </a>
+        )
+    }
+
+    {
+        nextObject && (
+            <a href={`/objects/${nextObject.id}`}>{nextObject.data.name} →</a>
+        )
+    }
+</nav>

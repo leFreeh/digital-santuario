@@ -1,0 +1,53 @@
+---
+import { getCollection, render } from "astro:content";
+
+import Layout from "../../layouts/Layout.astro";
+import ObjectInfo from "../../components/ObjectInfo.astro";
+import ObjectNavigation from "../../components/ObjectNavigation.astro";
+
+export async function getStaticPaths() {
+    const objects = await getCollection("objects");
+
+    return objects.map((object) => ({
+        params: {
+            id: object.id,
+        },
+    }));
+}
+
+const { id } = Astro.params;
+
+const objects = await getCollection("objects");
+
+const sortedObjects = [...objects].sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
+
+const currentIndex = sortedObjects.findIndex((object) => object.id === id);
+
+if (currentIndex === -1) {
+    throw new Error(`Objeto "${id}" no encontrado`);
+}
+
+const object = sortedObjects[currentIndex];
+
+const previousObject = sortedObjects[currentIndex + 1];
+const nextObject = sortedObjects[currentIndex - 1];
+
+const { Content } = await render(object);
+---
+
+<Layout title={object.data.name}>
+    <main class="mx-auto max-w-4xl space-y-12 px-6 py-12">
+        <ObjectInfo object={object} />
+
+        <article>
+            <Content />
+        </article>
+
+        <ObjectNavigation
+            previousObject={previousObject}
+            nextObject={nextObject}
+        />
+    </main>
+</Layout>
