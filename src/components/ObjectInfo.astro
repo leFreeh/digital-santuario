@@ -10,11 +10,14 @@ const { object } = Astro.props;
 
 <header class="space-y-4">
 
-  <img
-    src={object.data.image}
-    alt={object.data.name}
-    class="w-full rounded-xl object-cover"
-  />
+  <div class="aspect-video overflow-hidden rounded-xl bg-neutral-100">
+    <img
+      src={object.data.image}
+      alt={object.data.name}
+      class="h-full w-full object-cover"
+      loading="eager"
+    />
+  </div>
 
   <div>
     <h1 class="text-4xl font-bold">
