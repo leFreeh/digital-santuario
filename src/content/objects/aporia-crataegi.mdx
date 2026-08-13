@@ -4,15 +4,12 @@ date: "2026-08-11"
 tags:
   - mariposa
   - naturaleza
-image: "/images/aporia-crataegi/main.jpg"
+image: "/images/aporia-crataegi/main.webp"
 ---
 
 import Quote from '../../components/Quote.astro';
+import Gallery from '../../components/Gallery.astro';
 
-
-# Aporia Crataegi
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque sit amet interdum tellus, nec eleifend tortor. Nunc sit amet urna augue. Pellentesque eu nunc lectus. Cras in augue justo. Morbi maximus in neque sollicitudin vehicula. Curabitur mauris purus, dignissim ac tempor eu, interdum eget erat. Mauris ornare, tellus ac blandit porta, ante augue placerat ipsum, non auctor justo erat at nisl. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras id efficitur ex, eu commodo nulla.
 
 ## Simbologia
 
@@ -21,7 +18,42 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque sit amet i
 3.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque sit amet interdum tellus, nec eleifend tortor. Nunc sit amet urna augue. Pellentesque eu nunc lectus. Cras in augue justo. Morbi maximus in neque sollicitudin vehicula. Curabitur mauris purus, dignissim ac tempor eu, interdum eget erat. Mauris ornare, tellus ac blandit porta, ante augue placerat ipsum, non auctor justo erat at nisl. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras id efficitur ex, eu commodo nulla.
 4.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque sit amet interdum tellus, nec eleifend tortor. Nunc sit amet urna augue. Pellentesque eu nunc lectus. Cras in augue justo. Morbi maximus in neque sollicitudin vehicula. Curabitur mauris purus, dignissim ac tempor eu, interdum eget erat. Mauris ornare, tellus ac blandit porta, ante augue placerat ipsum, non auctor justo erat at nisl. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras id efficitur ex, eu commodo nulla.
 
+## Un título secundario
+
+Este es un párrafo normal.<br />
+Este texto tiene **énfasis importante**.
+
+También podemos utilizar *cursiva*.
+
+### Una lista
+
+- Primer elemento
+- Segundo elemento
+- Tercer elemento
+
+Y un [enlace](https://example.com).
+
+
 <Quote author="Dostoyevski">
   Nunca debí comprarla.
 </Quote>
 
+<Gallery
+  images={[
+    {
+      src: "/images/aporia-crataegi/detail (1).webp",
+      alt: "Detalle de las alas de Aporia Crataegi",
+      caption: "Detalle de las alas."
+    },
+    {
+      src: "/images/aporia-crataegi/detail (2).webp",
+      alt: "Vista lateral de Aporia Crataegi",
+      caption: "Detalle de las alas."
+    },
+    {
+      src: "/images/aporia-crataegi/detail (3).webp",
+      alt: "Vista lateral de Aporia Crataegi",
+      caption: "Detalle de las alas."
+    }
+  ]}
+/>

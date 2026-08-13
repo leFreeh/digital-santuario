@@ -2,25 +2,48 @@
 import type { CollectionEntry } from "astro:content";
 
 type Props = {
-    previousObject?: CollectionEntry<"objects">;
-    nextObject?: CollectionEntry<"objects">;
+    previous: CollectionEntry<"objects"> | null;
+    next: CollectionEntry<"objects"> | null;
 };
 
-const { previousObject, nextObject } = Astro.props;
+const { previous, next } = Astro.props;
 ---
 
-<nav>
-    {
-        previousObject && (
-            <a href={`/objects/${previousObject.id}`}>
-                ← {previousObject.data.name}
-            </a>
-        )
-    }
+<nav
+    class="mt-16 grid grid-cols-2 gap-4 border-t border-neutral-200 pt-8"
+    aria-label="Navegación entre objetos"
+>
+    {previous ? (
+        <a
+            href={`/objects/${previous.id}`}
+            class="group"
+        >
+            <span class="text-sm text-neutral-500">
+                ← Anterior
+            </span>
 
-    {
-        nextObject && (
-            <a href={`/objects/${nextObject.id}`}>{nextObject.data.name} →</a>
-        )
-    }
+            <p class="mt-1 font-medium group-hover:underline">
+                {previous.data.name}
+            </p>
+        </a>
+    ) : (
+        <div></div>
+    )}
+
+    {next ? (
+        <a
+            href={`/objects/${next.id}`}
+            class="group text-right"
+        >
+            <span class="text-sm text-neutral-500">
+                Siguiente →
+            </span>
+
+            <p class="mt-1 font-medium group-hover:underline">
+                {next.data.name}
+            </p>
+        </a>
+    ) : (
+        <div></div>
+    )}
 </nav>

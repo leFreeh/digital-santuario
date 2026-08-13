@@ -20,7 +20,7 @@ const { id } = Astro.params;
 const objects = await getCollection("objects");
 
 const sortedObjects = [...objects].sort(
-  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+    (a, b) => b.data.date.getTime() - a.data.date.getTime(),
 );
 
 const currentIndex = sortedObjects.findIndex((object) => object.id === id);
@@ -31,8 +31,13 @@ if (currentIndex === -1) {
 
 const object = sortedObjects[currentIndex];
 
-const previousObject = sortedObjects[currentIndex + 1];
-const nextObject = sortedObjects[currentIndex - 1];
+const previousObject =
+    currentIndex > 0 ? sortedObjects[currentIndex - 1] : null;
+
+const nextObject =
+    currentIndex < sortedObjects.length - 1
+        ? sortedObjects[currentIndex + 1]
+        : null;
 
 const { Content } = await render(object);
 ---
@@ -41,13 +46,10 @@ const { Content } = await render(object);
     <main class="mx-auto max-w-4xl space-y-12 px-6 py-12">
         <ObjectInfo object={object} />
 
-        <article>
+        <article class="prose prose-neutral max-w-none">
             <Content />
         </article>
 
-        <ObjectNavigation
-            previousObject={previousObject}
-            nextObject={nextObject}
-        />
+        <ObjectNavigation previous={previousObject} next={nextObject} />
     </main>
 </Layout>

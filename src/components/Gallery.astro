@@ -1,0 +1,209 @@
+---
+type GalleryImage = {
+    src: string;
+    alt: string;
+    caption?: string;
+};
+
+type Props = {
+    images: GalleryImage[];
+};
+
+const { images } = Astro.props;
+---
+
+<div class="not-prose grid grid-cols-2 gap-4">
+    {
+        images.map((image, index) => (
+            <figure>
+                <button
+                    type="button"
+                    class="block w-full cursor-zoom-in"
+                    data-gallery-index={index}
+                    aria-label={`Ampliar imagen: ${image.alt}`}
+                >
+                    <div class="aspect-video overflow-hidden rounded-xl bg-neutral-100">
+                        <img
+                            src={image.src}
+                            alt={image.alt}
+                            class="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
+                            loading="lazy"
+                        />
+                    </div>
+                </button>
+
+                {image.caption && (
+                    <figcaption class="mt-2 text-sm text-neutral-500">
+                        {image.caption}
+                    </figcaption>
+                )}
+            </figure>
+        ))
+    }
+</div>
+
+<dialog
+    id="gallery-lightbox"
+    class="m-auto h-[90vh] w-[90vw] max-w-7xl rounded-xl bg-transparent p-0 backdrop:bg-black/80 select-none"
+>
+    <div class="relative flex h-full w-full items-center justify-center">
+        <button
+            id="gallery-close"
+            type="button"
+            class="absolute right-4 top-4 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-sm transition hover:bg-black/60 focus:outline-none focus:ring-2 focus:ring-white"
+            aria-label="Cerrar imagen"
+        >
+            <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                class="h-5 w-5"
+                aria-hidden="true"
+            >
+                <path d="M6 6l12 12M18 6L6 18"></path>
+            </svg>
+        </button>
+
+        <button
+            id="gallery-prev"
+            type="button"
+            class="absolute left-4 top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-sm transition hover:bg-black/60 focus:outline-none focus:ring-2 focus:ring-white"
+            aria-label="Imagen anterior"
+        >
+            <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                class="h-7 w-7"
+                aria-hidden="true"
+            >
+                <path d="M15 18l-6-6 6-6"></path>
+            </svg>
+        </button>
+
+        <img
+            id="gallery-lightbox-image"
+            src=""
+            alt=""
+            draggable="false"
+            class="max-h-full max-w-full rounded-xl object-contain opacity-0 scale-95 transition-all duration-300"
+        />
+
+        <button
+            id="gallery-next"
+            type="button"
+            class="absolute right-4 top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-sm transition hover:bg-black/60 focus:outline-none focus:ring-2 focus:ring-white"
+            aria-label="Imagen siguiente"
+        >
+            <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                class="h-7 w-7"
+                aria-hidden="true"
+            >
+                <path d="M9 18l6-6-6-6"></path>
+            </svg>
+        </button>
+    </div>
+</dialog>
+
+<script>
+    const lightbox =
+        document.querySelector<HTMLDialogElement>("#gallery-lightbox");
+    const lightboxImage = document.querySelector<HTMLImageElement>(
+        "#gallery-lightbox-image",
+    );
+    const closeButton =
+        document.querySelector<HTMLButtonElement>("#gallery-close");
+    const prevButton =
+        document.querySelector<HTMLButtonElement>("#gallery-prev");
+    const nextButton =
+        document.querySelector<HTMLButtonElement>("#gallery-next");
+
+    const galleryButtons = document.querySelectorAll<HTMLButtonElement>(
+        "[data-gallery-index]",
+    );
+
+    let currentIndex = 0;
+
+    const showImage = (index: number) => {
+        const button = galleryButtons[index];
+
+        if (!button || !lightboxImage) return;
+
+        const image = button.querySelector<HTMLImageElement>("img");
+
+        if (!image) return;
+
+        currentIndex = index;
+
+        lightboxImage.src = image.src;
+        lightboxImage.alt = image.alt;
+
+        requestAnimationFrame(() => {
+            lightboxImage.classList.remove("opacity-0", "scale-95");
+            lightboxImage.classList.add("opacity-100", "scale-100");
+        });
+    };
+
+    galleryButtons.forEach((button, index) => {
+        button.addEventListener("click", () => {
+            showImage(index);
+            lightbox?.showModal();
+        });
+    });
+
+    closeButton?.addEventListener("click", () => {
+        lightbox?.close();
+    });
+
+    prevButton?.addEventListener("click", () => {
+        const newIndex =
+            currentIndex === 0 ? galleryButtons.length - 1 : currentIndex - 1;
+
+        showImage(newIndex);
+    });
+
+    nextButton?.addEventListener("click", () => {
+        const newIndex =
+            currentIndex === galleryButtons.length - 1 ? 0 : currentIndex + 1;
+
+        showImage(newIndex);
+    });
+
+    lightbox?.addEventListener("click", (event) => {
+        if (event.target === lightbox) {
+            lightbox.close();
+        }
+    });
+
+    document.addEventListener("keydown", (event) => {
+        if (!lightbox?.open) return;
+
+        if (event.key === "Escape") {
+            lightbox.close();
+        }
+
+        if (event.key === "ArrowLeft") {
+            const newIndex =
+                currentIndex === 0
+                    ? galleryButtons.length - 1
+                    : currentIndex - 1;
+
+            showImage(newIndex);
+        }
+
+        if (event.key === "ArrowRight") {
+            const newIndex =
+                currentIndex === galleryButtons.length - 1
+                    ? 0
+                    : currentIndex + 1;
+
+            showImage(newIndex);
+        }
+    });
+</script>

@@ -4,12 +4,12 @@ date: "2026-08-12"
 tags:
   - mariposa
   - naturaleza
-image: "/images/sericinus-montela/main.jpg"
+image: "/images/sericinus-montela/main.webp"
 ---
 
-# Sericinus Montela
+import Quote from '../../components/Quote.astro';
+import Gallery from '../../components/Gallery.astro';
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque sit amet interdum tellus, nec eleifend tortor. Nunc sit amet urna augue. Pellentesque eu nunc lectus. Cras in augue justo. Morbi maximus in neque sollicitudin vehicula. Curabitur mauris purus, dignissim ac tempor eu, interdum eget erat. Mauris ornare, tellus ac blandit porta, ante augue placerat ipsum, non auctor justo erat at nisl. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras id efficitur ex, eu commodo nulla.
 
 ## Simbologia
 
@@ -17,3 +17,27 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque sit amet i
 2.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque sit amet interdum tellus, nec eleifend tortor. Nunc sit amet urna augue. Pellentesque eu nunc lectus. Cras in augue justo. Morbi maximus in neque sollicitudin vehicula. Curabitur mauris purus, dignissim ac tempor eu, interdum eget erat. Mauris ornare, tellus ac blandit porta, ante augue placerat ipsum, non auctor justo erat at nisl. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras id efficitur ex, eu commodo nulla.
 3.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque sit amet interdum tellus, nec eleifend tortor. Nunc sit amet urna augue. Pellentesque eu nunc lectus. Cras in augue justo. Morbi maximus in neque sollicitudin vehicula. Curabitur mauris purus, dignissim ac tempor eu, interdum eget erat. Mauris ornare, tellus ac blandit porta, ante augue placerat ipsum, non auctor justo erat at nisl. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras id efficitur ex, eu commodo nulla.
 4.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque sit amet interdum tellus, nec eleifend tortor. Nunc sit amet urna augue. Pellentesque eu nunc lectus. Cras in augue justo. Morbi maximus in neque sollicitudin vehicula. Curabitur mauris purus, dignissim ac tempor eu, interdum eget erat. Mauris ornare, tellus ac blandit porta, ante augue placerat ipsum, non auctor justo erat at nisl. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras id efficitur ex, eu commodo nulla.
+
+<Quote author="Dostoyevski">
+  Nunca debí comprarla.
+</Quote>
+
+<Gallery
+  images={[
+    {
+      src: "/images/sericinus-montela/detail (1).webp",
+      alt: "Detalle de las alas de Aporia Crataegi",
+      caption: "Detalle de las alas."
+    },
+    {
+      src: "/images/sericinus-montela/detail (2).webp",
+      alt: "Vista lateral de Aporia Crataegi",
+      caption: "Detalle de las alas."
+    },
+    {
+      src: "/images/sericinus-montela/detail (3).webp",
+      alt: "Vista lateral de Aporia Crataegi",
+      caption: "Detalle de las alas."
+    }
+  ]}
+/>
