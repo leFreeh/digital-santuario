@@ -1,6 +1,7 @@
 import { defineCollection } from 'astro:content';
 import { z } from 'astro/zod';
 import { glob } from 'astro/loaders';
+import { number } from 'astro:schema';
 
 const objects = defineCollection({
     loader: glob({
@@ -9,6 +10,8 @@ const objects = defineCollection({
     }),
 
     schema: z.object({
+        number: z.string(),
+        commonName: z.string(),
         name: z.string(),
         date: z.coerce.date(),
         tags: z.array(z.string()).default([]),

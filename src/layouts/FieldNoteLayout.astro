@@ -1,0 +1,81 @@
+---
+import '../styles/global.css';
+
+interface Props {
+    title?: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <meta name="description" content={title} />
+        <title>{title ?? "Santuario Digital"}</title>
+    </head>
+
+    <body>
+        <main class="field-note">
+            <div class="field-note__page">
+                <slot />
+            </div>
+        </main>
+    </body>
+</html>
+
+<style>
+    .field-note {
+        min-height: 100vh;
+        background: #e8e4d8;
+        padding: 2rem 1rem;
+    }
+
+    .field-note__page {
+        position: relative;
+        isolation: isolate;
+        min-height: calc(100vh - 4rem);
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 3rem 3rem 4rem 5rem;
+
+        background-color: #f7f4eb;
+
+        background-image:
+            linear-gradient(
+                to right,
+                transparent 0,
+                transparent 3rem,
+                rgba(190, 80, 80, 0.18) 3rem,
+                rgba(190, 80, 80, 0.18) 3.1rem,
+                transparent 3.1rem
+            ),
+            linear-gradient(
+                to bottom,
+                transparent 0,
+                transparent 31px,
+                rgba(100, 120, 140, 0.12) 32px
+            );
+
+        background-size:
+            100% 100%,
+            100% 32px;
+
+        box-shadow:
+            0 1px 3px rgba(0, 0, 0, 0.04),
+            0 10px 30px rgba(0, 0, 0, 0.06);
+    }
+
+    @media (max-width: 640px) {
+        .field-note {
+            padding: 0;
+        }
+
+        .field-note__page {
+            min-height: 100vh;
+            padding: 2rem 1.5rem 3rem 3rem;
+        }
+    }
+</style>

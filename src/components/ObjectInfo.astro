@@ -1,42 +1,95 @@
 ---
-import type { CollectionEntry } from 'astro:content';
+import type { CollectionEntry } from "astro:content";
 
 type Props = {
-  object: CollectionEntry<'objects'>;
+  object: CollectionEntry<"objects">;
 };
 
 const { object } = Astro.props;
 ---
 
-<header class="space-y-4">
+<header class="space-y-8">
+  <!-- Cabecera -->
+  <div
+    class="flex items-end justify-between border-b border-neutral-400/40 pb-3"
+  >
+    <span class="text-xs font-medium uppercase tracking-[0.2em]">
+      Santuario Digital
+    </span>
 
-  <div class="aspect-video overflow-hidden rounded-xl bg-neutral-100">
-    <img
-      src={object.data.image}
-      alt={object.data.name}
-      class="h-full w-full object-cover"
-      loading="eager"
-    />
+    <span class="font-mono text-xs text-neutral-500">
+      Nº {String(object.data.number).padStart(3, "0")}
+    </span>
   </div>
 
-  <div>
-    <h1 class="text-4xl font-bold">
-      {object.data.name}
-    </h1>
+  <!-- Fecha -->
+  <p class="font-mono text-xs text-neutral-500">
+    {object.data.date.toLocaleDateString("es-ES")}
+  </p>
 
-    <p class="mt-2 text-sm text-neutral-500">
-      {object.data.date.toLocaleDateString()}
-    </p>
-  </div>
+  <!-- Fotografía -->
+  <div class="relative py-4">
+    <div
+      class="relative mx-auto w-fit max-w-full bg-white p-3 pb-8 shadow-xl rotate-[-2deg]"
+    >
+      <img
+        src={object.data.image}
+        alt={object.data.name}
+        class="block max-h-[65vh] max-w-full object-contain"
+      />
 
-  <div class="flex flex-wrap gap-2">
-    {object.data.tags.map((tag) => (
+      <!-- Cinta superior izquierda -->
       <span
-        class="rounded-full bg-neutral-100 px-3 py-1 text-sm text-neutral-700"
-      >
-        {tag}
-      </span>
-    ))}
+        class="absolute -left-7 top-2 h-8 w-24 rotate-[-40deg] bg-amber-100/70 shadow-sm"
+        aria-hidden="true"></span>
+
+      <!-- Cinta superior derecha -->
+      <span
+        class="absolute -right-7 top-4 h-8 w-36 rotate-[32deg] bg-amber-100/70 shadow-sm"
+        aria-hidden="true"></span>
+
+      <!-- Cinta inferior izquierda -->
+      <span
+        class="absolute -bottom-3 -left-4 h-8 w-24 rotate-[8deg] bg-amber-100/70 shadow-sm"
+        aria-hidden="true"></span>
+    </div>
+
+    <!-- Etiqueta -->
+    <div
+      class="field-note-hand relative z-10 ml-auto -mt-10 w-fit max-w-[90%] rotate-[-1.5deg] bg-[#f2ead4] px-6 py-4 shadow-[1px_2px_4px_rgba(0,0,0,0.12)] sm:-mt-12 sm:px-8"
+      style="clip-path: polygon(1% 3%, 98% 0%, 100% 96%, 2% 100%);"
+    >
+      <h1 class="text-2xl font-semibold leading-none sm:text-4xl">
+        {object.data.name}
+      </h1>
+
+      <p class="mt-1 text-xl text-neutral-700 sm:text-2xl">
+        {object.data.commonName}
+      </p>
+    </div>
   </div>
 
+  <!-- Clasificación -->
+  <div class="border-t border-neutral-400/40 pt-5">
+    <p
+      class="mb-3 font-mono text-[10px] uppercase tracking-[0.2em] text-neutral-500"
+    >
+      Classification
+    </p>
+
+    <div class="flex flex-wrap gap-2">
+      {
+        object.data.tags.map((tag, index) => (
+          <span
+            class:list={[
+              "border border-neutral-500/50 px-3 py-1 font-mono text-xs uppercase tracking-wide text-neutral-600",
+              index % 2 === 0 ? "rotate-[-1deg]" : "rotate-[1deg]",
+            ]}
+          >
+            {tag}
+          </span>
+        ))
+      }
+    </div>
+  </div>
 </header>

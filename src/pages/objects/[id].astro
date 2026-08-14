@@ -1,7 +1,7 @@
 ---
 import { getCollection, render } from "astro:content";
 
-import Layout from "../../layouts/Layout.astro";
+import FieldNoteLayout from "../../layouts/FieldNoteLayout.astro";
 import ObjectInfo from "../../components/ObjectInfo.astro";
 import ObjectNavigation from "../../components/ObjectNavigation.astro";
 
@@ -42,14 +42,16 @@ const nextObject =
 const { Content } = await render(object);
 ---
 
-<Layout title={object.data.name}>
-    <main class="mx-auto max-w-4xl space-y-12 px-6 py-12">
+<FieldNoteLayout title={object.data.name}>
+    <main class="mx-auto max-w-4xl px-6 py-12">
         <ObjectInfo object={object} />
 
-        <article class="prose prose-neutral max-w-none">
+        <article
+            class="field-note-content prose prose-neutral max-w-none mt-16"
+        >
             <Content />
         </article>
 
         <ObjectNavigation previous={previousObject} next={nextObject} />
     </main>
-</Layout>
+</FieldNoteLayout>

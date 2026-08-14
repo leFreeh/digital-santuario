@@ -1,0 +1,29 @@
+---
+type Props = {
+    position?: "left" | "right";
+};
+
+const { position = "right" } = Astro.props;
+
+const positionClass =
+    position === "left"
+        ? "md:float-left md:mr-8 md:-rotate-2"
+        : "md:float-right md:ml-8 md:rotate-2";
+---
+
+<aside
+    class:list={[
+        "field-note-note",
+        "my-6",
+        "w-full",
+        "max-w-xs",
+        "px-5",
+        "py-4",
+        "shadow-md",
+        positionClass,
+    ]}
+>
+    <div class="field-note-hand text-lg leading-relaxed">
+        <slot />
+    </div>
+</aside>
